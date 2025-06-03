@@ -8,8 +8,10 @@ import krkn.invoke.command as runcommand
 from krkn_lib.k8s import KrknKubernetes
 from krkn_lib.models.k8s import AffectedNode, AffectedNodeStatus
 from krkn_lib.models.k8s import AffectedNode
+from krkn_lib.models.k8s import KrknKubernetes
 
 node_general = False
+k8s_client = KrknKubernetes()
 
 
 def get_node_by_name(node_name_list, kubecli: KrknKubernetes):
@@ -67,10 +69,11 @@ def wait_for_unknown_status(node, timeout, kubecli: KrknKubernetes, affected_nod
 
 # Get the ip of the cluster node
 def get_node_ip(node):
-    return runcommand.invoke(
-        "kubectl get node %s -o "
-        "jsonpath='{.status.addresses[?(@.type==\"InternalIP\")].address}'" % (node)
-    )
+    try:
+        return k8s_client.get_node_ip(node)
+    except Exception as e:
+        logging.error("Failed to get {node} node's IP: %s" % e)
+        return None
 
 
 def check_service_status(node, service, ssh_private_key, timeout):
