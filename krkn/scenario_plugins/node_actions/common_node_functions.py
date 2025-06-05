@@ -64,15 +64,6 @@ def wait_for_unknown_status(node, timeout, kubecli: KrknKubernetes, affected_nod
     return affected_node
 
 
-# Get the ip of the cluster node
-def get_node_ip(node, kubecli: KrknKubernetes):
-    try:
-        return kubecli.get_node_ip(node)
-    except Exception as e:
-        logging.error("Failed to get {node} node's IP: %s" % e)
-        return None
-
-
 def check_service_status(node, service, ssh_private_key, timeout):
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
