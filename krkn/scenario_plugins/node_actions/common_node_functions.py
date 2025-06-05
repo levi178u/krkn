@@ -4,7 +4,6 @@ import random
 import logging
 import paramiko
 from krkn_lib.models.k8s import AffectedNode
-import krkn.invoke.command as runcommand
 from krkn_lib.k8s import KrknKubernetes
 from krkn_lib.models.k8s import AffectedNode, AffectedNodeStatus
 from krkn_lib.models.k8s import AffectedNode
