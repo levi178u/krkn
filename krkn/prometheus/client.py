@@ -263,7 +263,7 @@ def metrics(
                 save_metrics = True
         else:
             save_metrics = True
-        if save_metrics or elastic is None:
+        if save_metrics:
             local_dir = os.path.join(tempfile.gettempdir(), "krkn_metrics")
             os.makedirs(local_dir, exist_ok=True)
             local_file = os.path.join(local_dir, f"{elastic_metrics_index}_{run_uuid}.json")
